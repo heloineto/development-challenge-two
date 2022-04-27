@@ -1,9 +1,8 @@
-import Dialog from '@components/elements/other/Dialog';
+import React, { useState } from 'react';
 import { Button, ButtonProps } from '@mui/material';
 import classNames from 'clsx';
-import React from 'react';
-import { useState } from 'react';
 import { MagnifyingGlass } from 'phosphor-react';
+import Dialog from '../../elements/other/Dialog';
 
 type Props = ButtonProps;
 

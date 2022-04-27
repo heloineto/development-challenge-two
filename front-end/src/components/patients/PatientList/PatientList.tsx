@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'clsx';
-// import PatientSearch from '@components/patients/PatientSearch';
+import PatientSearch from '../PatientSearch';
 
 type Props = ComponentProps<'div'>;
 
@@ -13,7 +13,9 @@ const PatientList = ({ className, ...divProps }: Props) => {
       )}
       {...divProps}
     >
-      <div className="px-3 sm:px-6">{/* <PatientSearch className="w-full" /> */}</div>
+      <div className="px-3 sm:px-6">
+        <PatientSearch />
+      </div>
       <div className="mx-3 mt-2 h-full space-y-2.5 overflow-y-scroll bg-scroll pl-1 pr-2 pb-1 sm:ml-5 sm:mr-2">
         {/* <PatientListAddButton onClick={onCreateStart} />
         <PatientListHits onSelect={onSelect} selected={selected} /> */}

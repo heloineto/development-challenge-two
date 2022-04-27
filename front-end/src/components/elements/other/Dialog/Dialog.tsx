@@ -1,6 +1,6 @@
-import useBreakpoint from '@lib/hook/useBreakpoint';
 import { DialogProps } from '@mui/material';
 import React from 'react';
+import useBreakpoint from '../../../../lib/hook/useBreakpoint';
 
 type Props = DialogProps;
 
