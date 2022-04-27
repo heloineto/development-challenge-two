@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonProps } from '@mui/material';
 import classNames from 'clsx';
 import { MagnifyingGlass } from 'phosphor-react';
+import Dialog from '../../elements/other/Dialog';
 
 type Props = ButtonProps;
 
@@ -22,7 +23,7 @@ const PatientSearch = ({ className }: Props) => {
         Pesquisar pacientes
         <div className="rounded-md border border-gray-400 px-3 text-base">Ctrl+K</div>
       </Button>
-      {/* <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} /> */}
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
     </>
   );
 };

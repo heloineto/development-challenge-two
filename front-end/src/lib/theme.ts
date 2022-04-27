@@ -92,6 +92,7 @@ const theme: ThemeOptions = {
         },
       },
       defaultProps: {
+        color: 'inherit',
         variant: 'contained',
       },
     },

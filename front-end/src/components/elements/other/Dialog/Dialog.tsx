@@ -1,4 +1,4 @@
-import { DialogProps } from '@mui/material';
+import { DialogProps, Dialog as MuiDialog } from '@mui/material';
 import React from 'react';
 import useBreakpoint from '../../../../lib/hook/useBreakpoint';
 
@@ -8,7 +8,7 @@ const Dialog = ({ ...muiDialogProps }: Props) => {
   const mobile = useBreakpoint('md');
 
   return (
-    <Dialog
+    <MuiDialog
       fullScreen={mobile}
       fullWidth
       maxWidth="sm"
