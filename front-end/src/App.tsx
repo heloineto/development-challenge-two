@@ -1,15 +1,15 @@
 import * as React from 'react';
-import PatientList from './components/patients/PatientList';
 import Container from './components/layout/Container';
 import Grid from './components/layout/Grid';
 import Logo from './components/logo/Logo';
+import PatientList from './components/patients/PatientList';
 import PatientViewer from './components/patients/PatientViewer';
 
-export default function App() {
+const App = () => {
   return (
     <Container className="flex h-screen flex-col py-5">
-      <div className="mt-1 mb-7 grid h-10 place-items-center">
-        <Logo className="" />
+      <div className="mb-5 grid place-items-center">
+        <Logo />
       </div>
       <Grid className="flex-grow">
         <PatientList className="col-span-3" />
@@ -17,4 +17,6 @@ export default function App() {
       </Grid>
     </Container>
   );
-}
+};
+
+export default App;
