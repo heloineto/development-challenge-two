@@ -5,8 +5,8 @@ type Props = ComponentProps<'svg'>;
 const Logotype = ({ ...svgProps }: Props) => {
   return (
     <svg
-      width={193.5}
-      height={34}
+      width={387}
+      height={68}
       viewBox="0 0 387 68"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

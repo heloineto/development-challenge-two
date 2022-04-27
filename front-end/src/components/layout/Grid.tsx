@@ -7,7 +7,7 @@ interface Props extends ComponentProps<'div'> {
 
 const Grid = ({ className, as = 'div', ...divProps }: Props) => {
   return createElement(as, {
-    className: classNames(className, 'grid grid-cols-12 gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-5'),
+    className: classNames(className, 'grid grid-cols-12 gap-2 sm:gap-3 md:gap-4 lg:gap-5'),
     ...divProps,
   });
 };

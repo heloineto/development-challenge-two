@@ -29,6 +29,29 @@
   <meta name="msapplication-TileColor" content="#da532c" />
   <meta name="theme-color" content="#2b93dd" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style global jsx>
+    ::-webkit-scrollbar {
+      background: #fff;
+    }
+
+    *::-webkit-scrollbar {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      height: 56px;
+      border-radius: 8px;
+      border: 0.2rem solid transparent;
+      background-clip: content-box;
+      background-color: #999;
+    }
+
+    *:hover> ::-webkit-scrollbar-thumb {
+      background: #888;
+      background-clip: content-box;
+    }
+  </style>
 </head>
 
 <body style="background-color: #e2e8f0">

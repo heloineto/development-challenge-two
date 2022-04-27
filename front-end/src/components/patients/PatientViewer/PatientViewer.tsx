@@ -7,7 +7,7 @@ const PatientViewer = ({ className, ...divProps }: Props) => {
   return (
     <div
       className={classNames(
-        'flex h-full w-full flex-col overflow-y-hidden bg-white py-5 shadow sm:rounded-lg',
+        'flex h-full w-full flex-col overflow-y-hidden rounded-lg bg-white py-5 shadow',
         className,
       )}
       {...divProps}

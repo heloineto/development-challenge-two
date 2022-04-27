@@ -7,13 +7,13 @@ import PatientViewer from './components/patients/PatientViewer';
 
 const App = () => {
   return (
-    <Container className="flex h-screen flex-col py-5">
+    <Container className="flex flex-col py-5 xl:h-screen">
       <div className="mb-5 grid place-items-center">
         <Logo />
       </div>
       <Grid className="flex-grow">
-        <PatientList className="col-span-3" />
-        <PatientViewer className="col-span-9" />
+        <PatientList className="col-span-12 xl:col-span-4" />
+        <PatientViewer className="col-span-12 xl:col-span-8" />
       </Grid>
     </Container>
   );

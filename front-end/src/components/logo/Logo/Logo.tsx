@@ -11,8 +11,8 @@ const Logo = ({ className, ...divProps }: Props) => {
       className={classNames(className, 'flex items-center justify-center gap-2.5')}
       {...divProps}
     >
-      <Logomark />
-      <Logotype />
+      <Logomark className="h-[35.25px] w-[55.12500px] md:h-[47px] md:w-[73.5px]" />
+      <Logotype className="h-[25.5px] w-[145.125px] md:h-[34px] md:w-[193.5px]" />
     </div>
   );
 };
