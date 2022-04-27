@@ -9,6 +9,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "framer-motion": "^6.3.2",
+    "phosphor-react": "^1.4.1",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
