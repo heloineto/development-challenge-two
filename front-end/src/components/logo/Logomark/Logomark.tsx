@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface Props extends ComponentProps<'svg'> {}
+type Props = ComponentProps<'svg'>;
 
 const Logomark = ({ ...svgProps }: Props) => {
   return (
     <svg
-      width={147}
-      height={94}
+      width={73.5}
+      height={47}
       viewBox="0 0 147 94"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

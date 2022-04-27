@@ -1,9 +1,18 @@
 import React from 'react';
+import classNames from 'clsx';
 
-interface Props {}
+type Props = ComponentProps<'div'>;
 
-const PatientViewer = (props: Props) => {
-  return <div>PatientViewer</div>;
+const PatientViewer = ({ className, ...divProps }: Props) => {
+  return (
+    <div
+      className={classNames(
+        'flex h-full w-full flex-col overflow-y-hidden bg-white py-5 shadow sm:rounded-lg',
+        className,
+      )}
+      {...divProps}
+    ></div>
+  );
 };
 
 export default PatientViewer;
