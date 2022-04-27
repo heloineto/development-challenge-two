@@ -1,0 +1,15 @@
+{
+  "short_name": "Your Orders",
+  "name": "Your Orders",
+  "icons": [
+    {
+      "src": "/android-chrome-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2b93dd",
+  "background_color": "#ffffff"
+}
