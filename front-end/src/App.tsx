@@ -1,6 +1,14 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
+import PatientList from './components/patients/PatientList';
+import Container from './components/layout/Container';
+import Grid from './components/layout/Grid';
 
 export default function App() {
-  return <Container maxWidth="sm"></Container>;
+  return (
+    <Container className="h-screen py-10">
+      <Grid className="h-full">
+        <PatientList className="col-span-3" />
+      </Grid>
+    </Container>
+  );
 }

@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import theme from './theme';
+import 'tailwindcss/tailwind.css';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
@@ -11,5 +12,5 @@ ReactDOM.render(
     <CssBaseline />
     <App />
   </ThemeProvider>,
-  document.querySelector('#root')
+  document.querySelector('#root'),
 );
