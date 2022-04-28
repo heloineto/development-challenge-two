@@ -26,12 +26,13 @@ const IconButton = ({
 
   const StyledIconButton = useMemo(() => {
     return styled(MuiButton)(() => ({
-      backgroundColor: `${color[300]} !important`,
+      backgroundColor: `${color[200]} !important`,
       border: `0.125rem solid ${color[400]} !important`,
       borderRadius: 8,
-      color: color[50],
+      color: color[500],
       '&:hover': {
-        backgroundColor: `${color[500]} !important`,
+        backgroundColor: `${color[300]} !important`,
+        color: color[700],
         '--tw-shadow-color': `${color[500]}80`,
         '--tw-shadow': 'var(--tw-shadow-colored) !important',
       },

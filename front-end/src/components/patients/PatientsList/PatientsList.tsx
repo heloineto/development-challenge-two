@@ -19,8 +19,7 @@ const PatientsList = ({ className, ...divProps }: Props) => {
         <PatientSearch />
         <div className="my-2.5 flex flex-grow flex-col gap-y-2">
           <Button
-            className="mt-0 flex h-20 w-full flex-col items-center justify-center !border-2 !border-dashed border-slate-300 !bg-white px-4 py-2 shadow-sm hover:border-slate-400"
-            color="inherit"
+            className="mt-0 flex h-20 w-full flex-col items-center justify-center !border-2 !border-dashed !border-slate-500 !bg-white px-4 py-2 shadow-sm hover:border-slate-600"
             // onClick={onClick}
           >
             <UserCirclePlus className="h-8 w-auto text-slate-800" />
