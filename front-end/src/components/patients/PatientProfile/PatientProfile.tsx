@@ -1,9 +1,11 @@
 import React from 'react';
 import classNames from 'clsx';
+import PatientForm from './PatientProfile.Form';
+import PatientProfileButtons from './PatientProfile.Buttons';
 
 type Props = ComponentProps<'div'>;
 
-const PatientViewer = ({ className, ...divProps }: Props) => {
+const PatientProfile = ({ className, ...divProps }: Props) => {
   return (
     <div
       className={classNames(
@@ -11,8 +13,11 @@ const PatientViewer = ({ className, ...divProps }: Props) => {
         className,
       )}
       {...divProps}
-    ></div>
+    >
+      <PatientProfileButtons />
+      <PatientForm />
+    </div>
   );
 };
 
-export default PatientViewer;
+export default PatientProfile;

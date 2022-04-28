@@ -2,8 +2,8 @@ import * as React from 'react';
 import Container from './components/layout/Container';
 import Grid from './components/layout/Grid';
 import Logo from './components/logo/Logo';
-import PatientList from './components/patients/PatientList';
-import PatientViewer from './components/patients/PatientViewer';
+import PatientsList from './components/patients/PatientsList';
+import PatientProfile from './components/patients/PatientProfile';
 
 const App = () => {
   return (
@@ -12,8 +12,8 @@ const App = () => {
         <Logo />
       </div>
       <Grid className="flex-grow">
-        <PatientList className="col-span-12 xl:col-span-4" />
-        <PatientViewer className="col-span-12 xl:col-span-8" />
+        <PatientsList className="col-span-12 xl:col-span-4" />
+        <PatientProfile className="col-span-12 xl:col-span-8" />
       </Grid>
     </Container>
   );

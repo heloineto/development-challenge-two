@@ -12,6 +12,7 @@
     "phosphor-react": "^1.4.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-hotkeys-hook": "^3.4.4",
     "react-scripts": "latest",
     "typescript": "latest"
   },

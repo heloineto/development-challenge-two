@@ -9,3 +9,27 @@ type SetState<A> = Dispatch<SetStateAction<A>>;
 type NextPage = import('next').NextPage;
 
 type Icon = PhosphorIcon | (({ ...svgProps }: Props) => EmotionJSX.Element);
+
+type TailwindColorName =
+  | 'slate'
+  | 'gray'
+  | 'zinc'
+  | 'neutral'
+  | 'stone'
+  | 'red'
+  | 'orange'
+  | 'amber'
+  | 'yellow'
+  | 'lime'
+  | 'green'
+  | 'emerald'
+  | 'teal'
+  | 'cyan'
+  | 'sky'
+  | 'blue'
+  | 'indigo'
+  | 'violet'
+  | 'purple'
+  | 'fuchsia'
+  | 'pink'
+  | 'rose';

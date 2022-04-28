@@ -6,7 +6,7 @@ import { CaretLeft, CaretRight, UserCirclePlus } from 'phosphor-react';
 
 type Props = ComponentProps<'div'>;
 
-const PatientList = ({ className, ...divProps }: Props) => {
+const PatientsList = ({ className, ...divProps }: Props) => {
   return (
     <div
       className={classNames(
@@ -44,4 +44,4 @@ const PatientList = ({ className, ...divProps }: Props) => {
   );
 };
 
-export default PatientList;
+export default PatientsList;
