@@ -64,7 +64,7 @@ const AdressForm = ({ value, onChange }: Props) => {
                   <TextField label="Complemento" name="complement" />
                 </div>
               </div>
-              <div className="mt-6 flex h-11 flex-col gap-5 md:flex-row">
+              <div className="mt-6 flex flex-col-reverse gap-y-2.5 gap-x-5 md:flex-row">
                 <SecondaryButton onClick={() => setOpen(false)}>Cancelar</SecondaryButton>
                 <PrimaryButton type="submit">Salvar</PrimaryButton>
               </div>

@@ -31,7 +31,7 @@ const PatientProfileButtons = ({ className, ...divProps }: Props) => {
         </IconButton>
       </div>
       <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <div className="my-2.5 flex flex-col items-center justify-center gap-y-6">
+        <div className="mt-2.5 mb-2 flex flex-col items-center justify-center gap-y-6">
           <div className="flex flex-col items-center">
             <div className="text-3xl font-bold leading-6 text-gray-900">Remover cadastro</div>
             <p className="mt-2 text-lg text-gray-500">
