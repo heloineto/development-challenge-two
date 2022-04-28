@@ -14,7 +14,7 @@ const PatientProfile = ({ className, ...divProps }: Props) => {
       )}
       {...divProps}
     >
-      <div className="relative">
+      <div className="relative h-full">
         <PatientProfileButtons className="absolute top-4 right-4" />
         <PatientForm />
       </div>

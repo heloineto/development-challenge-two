@@ -118,6 +118,11 @@ const theme: ThemeOptions = {
     MuiTextField: {
       defaultProps: {
         variant: 'standard',
+        className: 'w-full',
+        InputLabelProps: {
+          className: 'text-lg -mt-1',
+          shrink: true,
+        },
         size: 'small',
       },
     },
