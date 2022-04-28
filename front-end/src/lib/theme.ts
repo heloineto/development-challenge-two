@@ -117,6 +117,7 @@ const theme: ThemeOptions = {
     },
     MuiTextField: {
       defaultProps: {
+        variant: 'standard',
         size: 'small',
       },
     },

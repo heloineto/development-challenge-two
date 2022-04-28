@@ -37,39 +37,21 @@ const PatientForm = ({ ...divProps }: Props) => {
       >
         {({ handleSubmit, form, values }) => (
           <form onSubmit={handleSubmit}>
-            <div className="flex items-center gap-x-5 p-5">
+            <div className="flex items-center gap-x-4 p-4">
               <TextField label="Nome completo" name="fullName" size="medium" />
+              <div className="h-10 w-24" />
             </div>
-            {/* <div className="border-t border-gray-200 p-5">
+            <div className="border-t border-gray-200 p-5">
               <div className="grid grid-cols-1 gap-x-4 gap-y-[clamp(0.25rem,1.5rem,3rem)] sm:grid-cols-2 xl:grid-cols-3">
-                <div className="relative pb-[100%] sm:col-span-1 sm:row-span-3 xl:row-span-4">
-                  <ProfilePicture
-                    className="absolute h-full w-full"
-                    profilePicture={profilePicture}
-                    setProfilePicture={setProfilePicture}
-                  />
-                </div>
-                <SeamlessmDateField
+                {/* <SeamlessmDateField
                   name="birthdate"
                   label="Data de nascimento"
                   showError={showErrorOnBlur}
                 />
-                <SeamlessSexField label="Sexo" name="sex" />
-                <SeamlessTextField label="Email" name="email" />
-                <SeamlessPhoneField label="Telefone para contato" name="phoneNumber" />
-                <SeamlessmMaritalStatusField label="Estado civil" name="maritalStatus" />
-                <SeamlessNationalityField
-                  label="Nacionalidade"
-                  name="nationality"
-                  currValue={values.nationality}
-                />
-                <SeamlessTextField label="Nome do pai" name="fatherFullName" />
-                <SeamlessTextField label="Nome da mãe" name="motherFullName" />
-                <SeamlessTextField label="Profissão" name="profession" />
-                <SeamlessSmokerField label="Tabagista" name="smoker" />
+                <TextField label="Email" name="email" /> */}
               </div>
             </div>
-            <div className="border-t border-gray-200 px-5 py-5">
+            {/* <div className="border-t border-gray-200 px-5 py-5">
               <SeamlessTextField
                 label="Observações"
                 name="notes"

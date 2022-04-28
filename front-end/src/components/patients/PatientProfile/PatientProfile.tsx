@@ -9,13 +9,13 @@ const PatientProfile = ({ className, ...divProps }: Props) => {
   return (
     <div
       className={classNames(
-        ' flex h-full w-full flex-col overflow-y-hidden rounded-lg bg-white p-4 shadow',
+        ' flex h-full w-full flex-col overflow-y-hidden rounded-lg bg-white shadow',
         className,
       )}
       {...divProps}
     >
       <div className="relative">
-        <PatientProfileButtons className="absolute top-0 right-0" />
+        <PatientProfileButtons className="absolute top-4 right-4" />
         <PatientForm />
       </div>
     </div>
