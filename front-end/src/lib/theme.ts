@@ -96,6 +96,25 @@ const theme: ThemeOptions = {
         variant: 'contained',
       },
     },
+    MuiPagination: {
+      styleOverrides: {
+        ul: {
+          justifyContent: 'space-between',
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+          color: twColors.slate[500],
+          borderColor: twColors.slate[600],
+          '&.Mui-selected': {
+            borderColor: twColors.blue[600],
+          },
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         size: 'small',
