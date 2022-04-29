@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Form } from 'react-final-form';
 import { DatePicker, makeValidate, TextField } from 'mui-rff';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import patientSchema from '../../../lib/schemas/patientSchema';
 import AdressForm from '../../elements/forms/AdressForm';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
+import { Calendar } from 'phosphor-react';
 
 type PatientFormValues = {
   fullName: Patient['fullName'];
@@ -38,15 +37,15 @@ const PatientForm = ({ ...formProps }: Props) => {
           </div>
           <div className="flex flex-grow flex-col gap-10 border-t border-gray-200 px-4 pt-7 pb-4">
             <div className="flex gap-7">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  name="birthdate"
-                  label="Data de nascimento"
-                  inputFormat="dd/MM/yyyy"
-                  InputProps={{ placeholder: 'dd/mm/aaaa' }}
-                  disableFuture
-                />
-              </LocalizationProvider>
+              <DatePicker
+                name="birthdate"
+                label="Data de nascimento"
+                inputFormat="dd/MM/yyyy"
+                components={{
+                  OpenPickerIcon: () => <Calendar className="text-slate-500" weight="duotone" />,
+                }}
+                disableFuture
+              />
               <TextField label="Email" name="email" />
             </div>
             <AdressForm value={adress} onChange={(adress) => setAdress(adress)} />
