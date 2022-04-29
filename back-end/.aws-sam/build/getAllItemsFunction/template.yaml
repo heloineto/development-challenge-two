@@ -5,7 +5,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  AWS API Gateway using the REST Protocol. We use AWS Lambda for serveless computing and DynamoDB for the database.
+  AWS API Gateway using the REST Protocol. We use AWS Lambda for serveless computing and DynamoDB as the database.
 
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
@@ -15,22 +15,28 @@ Transform:
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
-  getAllPatientsFunction:
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: get-all-items.js
+  getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-all-patients.getAllPatientsHandler
+      Handler: src/handlers/get-all-items.getAllItemsHandler
       Runtime: nodejs14.x
       Architectures:
         - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all patients from the DynamoDB patients' table.
+      Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
       Policies:
+        # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            cle: !Ref PatientsTable
+            TableName: !Ref SampleTable
       Environment:
         Variables:
-          TABLE_NAME: !Ref PatientsTable
+          # Make table name accessible as environment variable from function code during execution
+          TABLE_NAME: !Ref SampleTable
       Events:
         Api:
           Type: Api
@@ -52,13 +58,13 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the PatientsTable
+        # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref PatientsTable
+            TableName: !Ref SampleTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          TABLE_NAME: !Ref PatientsTable
+          TABLE_NAME: !Ref SampleTable
       Events:
         Api:
           Type: Api
@@ -80,23 +86,26 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the PatientsTable
+        # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref PatientsTable
+            TableName: !Ref SampleTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          TABLE_NAME: !Ref PatientsTable
+          TABLE_NAME: !Ref SampleTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /
             Method: POST
-  PatientsTable:
-    Type: AWS::DynamoDB::Table
+  # Simple syntax to create a DynamoDB table with a single attribute primary key, more in
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesssimpletable
+
+  # DynamoDB table to store item: {id: <ID>, name: <NAME>}
+  SampleTable:
+    Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: PatientsTable
       PrimaryKey:
         Name: id
         Type: String

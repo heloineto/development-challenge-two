@@ -3,6 +3,7 @@ interface Patient {
   birthdate?: Date;
   email?: string;
   adress?: Adress;
+  id?: number;
 }
 
 interface Adress {
