@@ -1,37 +1,37 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: AWS API Gateway using the REST Protocol. We use AWS Lambda for serveless
-  computing and DynamoDB as the database.
+  computing and DynamoDB for the database.
 Transform:
 - AWS::Serverless-2016-10-31
 Resources:
-  getAllItemsFunction:
+  getAllPatientsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-all-items.getAllItemsHandler
+      Handler: src/handlers/get-all-patients.getAllPatientsHandler
       Runtime: nodejs14.x
       Architectures:
       - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all items from
-        a DynamoDB table.
+      Description: A simple example includes a HTTP get method to get all patients
+        from the DynamoDB patients' table.
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: PatientsTable
       Environment:
         Variables:
           TABLE_NAME:
-            Ref: SampleTable
+            Ref: PatientsTable
       Events:
         Api:
           Type: Api
           Properties:
             Path: /
             Method: GET
-      CodeUri: getAllItemsFunction
+      CodeUri: getAllPatientsFunction
     Metadata:
-      SamResourceId: getAllItemsFunction
+      SamResourceId: getAllPatientsFunction
   getByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -46,11 +46,11 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: PatientsTable
       Environment:
         Variables:
           TABLE_NAME:
-            Ref: SampleTable
+            Ref: PatientsTable
       Events:
         Api:
           Type: Api
@@ -74,11 +74,11 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: PatientsTable
       Environment:
         Variables:
           TABLE_NAME:
-            Ref: SampleTable
+            Ref: PatientsTable
       Events:
         Api:
           Type: Api
@@ -88,7 +88,7 @@ Resources:
       CodeUri: putItemFunction
     Metadata:
       SamResourceId: putItemFunction
-  SampleTable:
+  PatientsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:

@@ -9,8 +9,8 @@ const usePatients = () => {
     const getPatients = async () => {
       const response = await fetch(API_URL);
 
-      setPatients(response.body);
-      setLoading(false);
+      // setPatients(response.body);
+      // setLoading(false);
     };
 
     getPatients();

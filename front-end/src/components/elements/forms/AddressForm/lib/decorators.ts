@@ -1,7 +1,7 @@
 import cep, { CEP } from 'cep-promise';
 import createDecorator from 'final-form-calculate';
 
-export const adressDecorator = createDecorator({
+export const addressDecorator = createDecorator({
   field: 'zipCode',
   updates: async (value) => {
     if (!value || value.length !== 9) return {};

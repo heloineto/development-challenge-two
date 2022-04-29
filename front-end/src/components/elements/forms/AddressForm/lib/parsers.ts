@@ -8,7 +8,7 @@ export const parseZipCode = (value: string) => {
   return `${onlyNums.slice(0, 5)}-${onlyNums.slice(5, 8)}`;
 };
 
-export const parseAdress = (value: Adress | undefined) => {
+export const parseAddress = (value: Adress | undefined) => {
   if (!value || isEmpty(value)) return '';
 
   const { street, streetNumber, neighborhood, city, state, zipCode } = value;

@@ -5,8 +5,8 @@ import PrimaryButton from '../../buttons/PrimaryButton';
 import { makeValidate, TextField } from 'mui-rff';
 import { Form } from 'react-final-form';
 import adressSchema from '../../../../lib/schemas/adressSchema';
-import { adressDecorator } from './lib/decorators';
-import { parseAdress, parseZipCode } from './lib/parsers';
+import { addressDecorator } from './lib/decorators';
+import { parseAddress, parseZipCode } from './lib/parsers';
 import Dialog from '../../other/Dialog';
 
 interface Props {
@@ -15,10 +15,10 @@ interface Props {
   onChange: (adress: Adress) => void;
 }
 
-const AdressForm = ({ value, onChange }: Props) => {
+const AddressForm = ({ value, onChange }: Props) => {
   const [open, setOpen] = useState(false);
   const initialValues = value;
-  const adressStr = useMemo(() => parseAdress(value), [value]);
+  const adressStr = useMemo(() => parseAddress(value), [value]);
 
   return (
     <>
@@ -37,7 +37,7 @@ const AdressForm = ({ value, onChange }: Props) => {
           }}
           validate={makeValidate<Partial<Adress>>(adressSchema)}
           initialValues={initialValues}
-          decorators={[adressDecorator] as any}
+          decorators={[addressDecorator] as any}
         >
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit} className="px-2 py-2">
@@ -76,4 +76,4 @@ const AdressForm = ({ value, onChange }: Props) => {
   );
 };
 
-export default AdressForm;
+export default AddressForm;

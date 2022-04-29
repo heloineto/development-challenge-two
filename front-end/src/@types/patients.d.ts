@@ -2,7 +2,7 @@ interface Patient {
   fullName: string;
   birthdate?: Date;
   email?: string;
-  adress?: Adress;
+  address?: Adress;
   id?: number;
 }
 

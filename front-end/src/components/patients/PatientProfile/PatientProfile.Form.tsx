@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form } from 'react-final-form';
 import { DatePicker, makeValidate, TextField } from 'mui-rff';
 import patientSchema from '../../../lib/schemas/patientSchema';
-import AdressForm from '../../elements/forms/AdressForm';
+import AddressForm from '../../elements/forms/AddressForm';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
 import { Calendar } from 'phosphor-react';
 
@@ -15,7 +15,7 @@ type PatientFormValues = {
 type Props = ComponentProps<'form'>;
 
 const PatientForm = ({ ...formProps }: Props) => {
-  const [adress, setAdress] = useState<Adress | undefined>();
+  const [address, setAddress] = useState<Address | undefined>();
 
   const onSubmit = async (values: PatientFormValues) => {
     console.log(values);
@@ -48,7 +48,7 @@ const PatientForm = ({ ...formProps }: Props) => {
               />
               <TextField label="Email" name="email" />
             </div>
-            <AdressForm value={adress} onChange={(adress) => setAdress(adress)} />
+            <AddressForm value={address} onChange={(address) => setAddress(address)} />
             <PrimaryButton className="!mt-auto">Salvar</PrimaryButton>
           </div>
         </form>

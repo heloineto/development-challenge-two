@@ -27,7 +27,7 @@ Resources:
       Description: A simple example includes a HTTP get method to get all patients from the DynamoDB patients' table.
       Policies:
         - DynamoDBCrudPolicy:
-            cle: !Ref PatientsTable
+            TableName: !Ref PatientsTable
       Environment:
         Variables:
           TABLE_NAME: !Ref PatientsTable
@@ -94,9 +94,8 @@ Resources:
             Path: /
             Method: POST
   PatientsTable:
-    Type: AWS::DynamoDB::Table
+    Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: PatientsTable
       PrimaryKey:
         Name: id
         Type: String
