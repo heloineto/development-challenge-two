@@ -8,6 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ptBR } from 'date-fns/esm/locale';
 import 'tailwindcss/tailwind.css';
+import SnackbarProvider from './components/elements/other/SnackbarProvider';
 
 const container = document.getElementById('root');
 
@@ -17,9 +18,11 @@ const root = createRoot(container!);
 root.render(
   <ThemeProvider theme={theme}>
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBR}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      <App />
+      <SnackbarProvider>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <App />
+      </SnackbarProvider>
     </LocalizationProvider>
   </ThemeProvider>,
 );

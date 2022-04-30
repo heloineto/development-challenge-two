@@ -27,7 +27,7 @@ const PatientForm = ({ ...formProps }: Props) => {
       initialValues={initialValues}
       validate={makeValidate<Partial<PatientFormValues>>(patientSchema)}
     >
-      {({ handleSubmit, values }) => (
+      {({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className="flex h-full flex-col" {...formProps}>
           <div className="flex items-center gap-x-4 px-4 py-7">
             <TextField label="Nome completo" name="fullName" size="medium" required />

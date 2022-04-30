@@ -13,7 +13,7 @@ const Dialog = ({ ...muiDialogProps }: Props) => {
       fullWidth
       maxWidth="sm"
       classes={{
-        paper: 'bg-white px-4 py-3 md:border-2 md:border-gray-300 md:!rounded-xl gap-y-3',
+        paper: 'bg-white px-4 py-3 md:border-2 md:border-gray-300 md:!rounded-lg gap-y-3',
       }}
       {...muiDialogProps}
     />

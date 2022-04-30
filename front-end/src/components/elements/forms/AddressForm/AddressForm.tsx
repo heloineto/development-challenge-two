@@ -15,7 +15,7 @@ interface Props {
   onChange: (address: Address) => void;
 }
 
-const AddressForm = ({ value, onChange }: Props) => {
+const AddressForm = ({ value, onChange, textFieldProps }: Props) => {
   const [open, setOpen] = useState(false);
   const initialValues = value;
   const addressStr = useMemo(() => parseAddress(value), [value]);
@@ -28,6 +28,7 @@ const AddressForm = ({ value, onChange }: Props) => {
         maxRows={2}
         value={addressStr}
         onClick={() => setOpen(true)}
+        {...textFieldProps}
       />
       <Dialog open={open} onClose={() => setOpen(false)}>
         <Form

@@ -15,7 +15,7 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all patients from the DynamoDB patients' table.
+      Description: A HTTP get method to get all patients from the DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref PatientsTable
@@ -48,18 +48,18 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /{id}
+            Path: /patients/{id}
             Method: GET
-  putItemFunction:
+  putPatientFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/put-item.putItemHandler
+      Handler: src/handlers/put-patient.putPatientHandler
       Runtime: nodejs14.x
       Architectures:
         - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Description: A HTTP post method to add one patient to the DynamoDB table.
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref PatientsTable
@@ -70,7 +70,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /patients
             Method: POST
   PatientsTable:
     Type: AWS::Serverless::SimpleTable
