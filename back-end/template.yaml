@@ -72,6 +72,29 @@ Resources:
           Properties:
             Path: /patients
             Method: POST
+  deletePatientFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-patient.deletePatientHandler
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A HTTP delete method to delete one patient by id from the DynamoDB table.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref PatientsTable
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref PatientsTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /patients/{id}
+            Method: DELETE
+
   PatientsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:

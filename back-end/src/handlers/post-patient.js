@@ -9,7 +9,7 @@ function generateId() {
   var randid = Math.floor(Math.random() * 512);
   ts = ts * 64; // bit-shift << 6
   ts = ts;
-  return ts * 512 + randid;
+  return String(ts * 512 + randid);
 }
 
 exports.postPatientHandler = async (event) => {
@@ -26,14 +26,16 @@ exports.postPatientHandler = async (event) => {
   try {
     await patientSchema.validate(body);
   } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      const response = {
-        statusCode: 400,
-        body: JSON.stringify(error),
-      };
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify(error),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+      },
+    };
 
-      return response;
-    }
+    return response;
   }
 
   const id = generateId();
@@ -49,6 +51,10 @@ exports.postPatientHandler = async (event) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify(Item),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+    },
   };
 
   console.info(

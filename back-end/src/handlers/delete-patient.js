@@ -13,37 +13,23 @@ exports.deletePatientHandler = async (event) => {
 
   console.info('received:', event);
 
-  const body = JSON.parse(event.body);
-
-  try {
-    await patientSchema.validate(body);
-  } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      const response = {
-        statusCode: 400,
-        body: JSON.stringify(error),
-      };
-
-      return response;
-    }
-  }
-
-  const id = generateId();
-  const Item = { id, ...body };
+  const id = event.pathParameters.id;
 
   var params = {
     TableName: tableName,
-    Item,
+    Key: { id: id },
   };
-
-  const result = await docClient.put(params).promise();
+  const data = await docClient.delete(params).promise();
 
   const response = {
     statusCode: 200,
-    body: JSON.stringify(Item),
+    body: 'Deleted successfully',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+    },
   };
 
-  // All log statements are written to CloudWatch
   console.info(
     `response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
   );
