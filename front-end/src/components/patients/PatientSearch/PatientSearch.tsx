@@ -23,7 +23,7 @@ const PatientSearch = ({ className }: Props) => {
           <MagnifyingGlass className="h-5 w-5" weight="bold" />
           Pesquisar pacientes
         </div>
-        <div className="rounded-md border border-gray-400 px-3">Ctrl+K</div>
+        <div className="rounded-md border border-slate-400 px-3">Ctrl+K</div>
       </Button>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
     </>

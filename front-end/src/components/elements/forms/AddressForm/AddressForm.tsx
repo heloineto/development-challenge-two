@@ -43,7 +43,7 @@ const AddressForm = ({ value, onChange, textFieldProps }: Props) => {
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit} className="px-2 py-2">
               <div>
-                <div className="-mx-6 -mt-6 mb-4 border-b border-gray-200 pt-8 pb-6 text-center text-3xl font-bold leading-6 text-gray-800">
+                <div className="-mx-6 -mt-6 mb-4 border-b border-slate-200 pt-8 pb-6 text-center text-3xl font-bold leading-6 text-slate-800">
                   Endereço
                 </div>
                 <div className="flex flex-col gap-y-10">

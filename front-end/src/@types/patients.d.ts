@@ -1,9 +1,10 @@
 interface Patient {
+  id: string;
   fullName: string;
-  birthdate?: Date;
+  birthdate?: string;
   email?: string;
   address?: Address;
-  id?: number;
+  pictureUrl?: string;
 }
 
 interface Address {
