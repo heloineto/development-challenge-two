@@ -24,6 +24,7 @@ const patientSchema = yup.object().shape({
       streetNumber: yup.string().required('Forneca um Número'),
       complement: yup.string(),
     })
+    .notRequired()
     .default(undefined),
 });
 

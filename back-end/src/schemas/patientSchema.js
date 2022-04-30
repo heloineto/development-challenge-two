@@ -1,4 +1,4 @@
-import * as yup from 'yup';
+const yup = require('yup');
 
 const getTomorrow = () => {
   const tomorrow = new Date();
@@ -27,4 +27,4 @@ const patientSchema = yup.object().shape({
     .default(undefined),
 });
 
-export default patientSchema;
+module.exports = patientSchema;

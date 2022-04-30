@@ -5,18 +5,22 @@ import patientSchema from '../../../lib/schemas/patientSchema';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
 import { Calendar } from 'phosphor-react';
 import AddressField from '../../elements/fields/AddressField';
+import api from '../../../lib/api';
 
 type PatientFormValues = {
   fullName: Patient['fullName'];
   birthdate: Patient['birthdate'];
   email: Patient['email'];
+  address: Partial<Patient['address']>;
 };
 
 type Props = ComponentProps<'form'>;
 
 const PatientForm = ({ ...formProps }: Props) => {
   const onSubmit = async (values: PatientFormValues) => {
-    console.log(values);
+    const response = await api.post('patients', values);
+
+    console.log('response', response);
   };
 
   const initialValues = {};

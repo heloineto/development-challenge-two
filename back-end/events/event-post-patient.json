@@ -1,0 +1,4 @@
+{
+    "httpMethod": "POST",
+    "body": "{\"fullName\":\"Heloi Vieira de Abreu Neto\",\"email\":\"heloiabreuneto@gmail.com\",\"birthdate\":\"2000-11-04T02:00:00.000Z\",\"adress\":{\"zipCode\":\"84015-780\",\"state\":\"PR\",\"city\":\"Ponta Grossa\",\"street\":\"Rua Laurentino Deco Fagundes\",\"streetNumber\":\"5\",\"neighborhood\":\"Jardim Carvalho\"}}"
+}

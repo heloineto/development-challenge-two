@@ -19,7 +19,7 @@ const PatientSearch = ({ className }: Props) => {
         variant="outlined"
         onClick={() => setDialogOpen(true)}
       >
-        <div className="flex items-center gap-x-2.5">
+        <div className="flex items-center gap-x-2.5 text-xs sm:text-sm md:text-base">
           <MagnifyingGlass className="h-5 w-5" weight="bold" />
           Pesquisar pacientes
         </div>

@@ -1,6 +1,6 @@
 // import axios from 'axios';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import api from '../api';
 import patientSchema from '../schemas/patientSchema';
 import useOnError from './useOnError';
 
@@ -12,9 +12,9 @@ const usePatients = () => {
 
   useEffect(() => {
     const getPatients = async () => {
-      const response = await axios.get(
-        'https://3fbmy904ja.execute-api.sa-east-1.amazonaws.com/Prod/patients',
-      );
+      const response = await api.get('patients');
+
+      console.log(response);
 
       const { data } = response;
 

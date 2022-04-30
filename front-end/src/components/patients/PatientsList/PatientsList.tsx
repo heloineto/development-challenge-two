@@ -10,8 +10,6 @@ type Props = ComponentProps<'div'>;
 const PatientsList = ({ className, ...divProps }: Props) => {
   const patients = usePatients();
 
-  console.log({ patients });
-
   return (
     <div
       className={classNames(
@@ -38,7 +36,6 @@ const PatientsList = ({ className, ...divProps }: Props) => {
           shape="rounded"
           count={12}
           color="primary"
-          siblingCount={2}
           renderItem={(item) => (
             <PaginationItem components={{ previous: CaretLeft, next: CaretRight }} {...item} />
           )}
