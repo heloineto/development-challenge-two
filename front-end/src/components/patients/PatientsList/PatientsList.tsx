@@ -3,10 +3,15 @@ import classNames from 'clsx';
 import PatientSearch from '../PatientSearch';
 import { Button, Pagination, PaginationItem } from '@mui/material';
 import { CaretLeft, CaretRight, UserCirclePlus } from 'phosphor-react';
+import usePatients from '../../../lib/hook/usePatients';
 
 type Props = ComponentProps<'div'>;
 
 const PatientsList = ({ className, ...divProps }: Props) => {
+  const patients = usePatients();
+
+  console.log({ patients });
+
   return (
     <div
       className={classNames(

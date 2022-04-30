@@ -2,11 +2,11 @@ interface Patient {
   fullName: string;
   birthdate?: Date;
   email?: string;
-  address?: Adress;
+  address?: Address;
   id?: number;
 }
 
-interface Adress {
+interface Address {
   zipCode: string;
   state: string;
   city: string;

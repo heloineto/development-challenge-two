@@ -4,21 +4,21 @@ import SecondaryButton from '../../buttons/SecondaryButton';
 import PrimaryButton from '../../buttons/PrimaryButton';
 import { makeValidate, TextField } from 'mui-rff';
 import { Form } from 'react-final-form';
-import adressSchema from '../../../../lib/schemas/adressSchema';
+import addressSchema from '../../../../lib/schemas/addressSchema';
 import { addressDecorator } from './lib/decorators';
 import { parseAddress, parseZipCode } from './lib/parsers';
 import Dialog from '../../other/Dialog';
 
 interface Props {
   textFieldProps?: MuiTextFieldProps;
-  value: Adress | undefined;
-  onChange: (adress: Adress) => void;
+  value: Address | undefined;
+  onChange: (address: Address) => void;
 }
 
 const AddressForm = ({ value, onChange }: Props) => {
   const [open, setOpen] = useState(false);
   const initialValues = value;
-  const adressStr = useMemo(() => parseAddress(value), [value]);
+  const addressStr = useMemo(() => parseAddress(value), [value]);
 
   return (
     <>
@@ -26,16 +26,16 @@ const AddressForm = ({ value, onChange }: Props) => {
         label="Endereço"
         multiline
         maxRows={2}
-        value={adressStr}
+        value={addressStr}
         onClick={() => setOpen(true)}
       />
       <Dialog open={open} onClose={() => setOpen(false)}>
         <Form
-          onSubmit={(values: Adress) => {
+          onSubmit={(values: Address) => {
             setOpen(false);
             onChange(values);
           }}
-          validate={makeValidate<Partial<Adress>>(adressSchema)}
+          validate={makeValidate<Partial<Address>>(addressSchema)}
           initialValues={initialValues}
           decorators={[addressDecorator] as any}
         >

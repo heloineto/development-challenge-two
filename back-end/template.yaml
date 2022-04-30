@@ -1,19 +1,10 @@
-# This is the SAM template that represents the architecture of your serverless application
-# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
-
-# The AWSTemplateFormatVersion identifies the capabilities of the template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   AWS API Gateway using the REST Protocol. We use AWS Lambda for serveless computing and DynamoDB for the database.
 
-# Transform section specifies one or more macros that AWS CloudFormation uses to process your template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
   - AWS::Serverless-2016-10-31
 
-# Resources declares the AWS resources that you want to include in the stack
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
   getAllPatientsFunction:
     Type: AWS::Serverless::Function
@@ -35,12 +26,8 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /patients
             Method: GET
-  # Each Lambda function is defined by properties:
-  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-
-  # This is a Lambda function config associated with the source code: get-by-id.js
   getByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -52,12 +39,10 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the PatientsTable
         - DynamoDBCrudPolicy:
             TableName: !Ref PatientsTable
       Environment:
         Variables:
-          # Make table name accessible as environment variable from function code during execution
           TABLE_NAME: !Ref PatientsTable
       Events:
         Api:
@@ -65,10 +50,6 @@ Resources:
           Properties:
             Path: /{id}
             Method: GET
-  # Each Lambda function is defined by properties:
-  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-
-  # This is a Lambda function config associated with the source code: put-item.js
   putItemFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -80,12 +61,10 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the PatientsTable
         - DynamoDBCrudPolicy:
             TableName: !Ref PatientsTable
       Environment:
         Variables:
-          # Make table name accessible as environment variable from function code during execution
           TABLE_NAME: !Ref PatientsTable
       Events:
         Api:
@@ -105,5 +84,5 @@ Resources:
 
 Outputs:
   WebEndpoint:
-    Description: 'API Gateway endpoint URL for production stage'
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/'
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'

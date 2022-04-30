@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import addressSchema from './addressSchema';
 
 const getTomorrow = () => {
   const tomorrow = new Date();
@@ -14,6 +15,7 @@ const patientSchema = yup.object().shape({
     .typeError('Esta data não e valida')
     .max(getTomorrow(), 'A data de nascimento deve ser anterior à data atual'),
   email: yup.string().email('Forneça um e-mail válido'),
+  address: addressSchema.optional(),
 });
 
 export default patientSchema;

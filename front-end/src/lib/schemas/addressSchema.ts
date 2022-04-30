@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const adressSchema = yup.object().shape({
+const addressSchema = yup.object().shape({
   zipCode: yup.string().required('Forneca um CEP'),
   state: yup.string().required('Forneca um Estado'),
   city: yup.string().required('Forneca uma Cidade'),
@@ -10,4 +10,4 @@ const adressSchema = yup.object().shape({
   complement: yup.string(),
 });
 
-export default adressSchema;
+export default addressSchema;

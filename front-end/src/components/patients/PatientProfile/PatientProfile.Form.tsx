@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form } from 'react-final-form';
 import { DatePicker, makeValidate, TextField } from 'mui-rff';
 import patientSchema from '../../../lib/schemas/patientSchema';
-import AddressForm from '../../elements/forms/AddressForm';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
 import { Calendar } from 'phosphor-react';
+import AddressField from '../../elements/fields/AddressField';
 
 type PatientFormValues = {
   fullName: Patient['fullName'];
@@ -15,8 +15,6 @@ type PatientFormValues = {
 type Props = ComponentProps<'form'>;
 
 const PatientForm = ({ ...formProps }: Props) => {
-  const [address, setAddress] = useState<Address | undefined>();
-
   const onSubmit = async (values: PatientFormValues) => {
     console.log(values);
   };
@@ -29,7 +27,7 @@ const PatientForm = ({ ...formProps }: Props) => {
       initialValues={initialValues}
       validate={makeValidate<Partial<PatientFormValues>>(patientSchema)}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} className="flex h-full flex-col" {...formProps}>
           <div className="flex items-center gap-x-4 px-4 py-7">
             <TextField label="Nome completo" name="fullName" size="medium" required />
@@ -48,8 +46,12 @@ const PatientForm = ({ ...formProps }: Props) => {
               />
               <TextField label="Email" name="email" />
             </div>
-            <AddressForm value={address} onChange={(address) => setAddress(address)} />
-            <PrimaryButton className="!mt-auto">Salvar</PrimaryButton>
+            <AddressField name="adress" />
+          </div>
+          <div className="mt-auto border-t border-gray-200 px-4 pt-5 pb-4">
+            <PrimaryButton type="submit" className="">
+              Salvar
+            </PrimaryButton>
           </div>
         </form>
       )}
