@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import classNames from 'clsx';
 import IconButton from '../../buttons/IconButton';
@@ -22,6 +22,10 @@ const PictureDialog = ({ open, onClose, value, onChange }: Props) => {
   const [cameraOpen, setCameraOpen] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setImage(value);
+  }, [value]);
 
   return (
     <>

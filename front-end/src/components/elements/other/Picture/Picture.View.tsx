@@ -38,7 +38,10 @@ const PictureView = ({ picture, openDialog }: Props) => {
   }
 
   return (
-    <div onClick={openDialog} className="h-full w-full select-none overflow-hidden rounded-md">
+    <div
+      onClick={openDialog}
+      className="relative h-full w-full select-none overflow-hidden rounded-md"
+    >
       <img
         className="relative min-h-full min-w-full object-cover"
         src={picture}

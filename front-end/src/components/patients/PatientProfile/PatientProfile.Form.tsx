@@ -13,6 +13,7 @@ type PatientFormValues = {
   birthdate?: Date;
   email?: string;
   address?: Partial<Address>;
+  picture?: string;
 };
 
 type Props = ComponentProps<'form'>;
@@ -32,7 +33,7 @@ const PatientForm = ({ ...formProps }: Props) => {
       initialValues={initialValues}
       validate={makeValidate<Partial<PatientFormValues>>(patientSchema)}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} className="flex h-full flex-col" {...formProps}>
           <div className="flex items-center gap-x-4 px-4 py-7">
             <TextField label="Nome completo" name="fullName" size="medium" required />
@@ -58,6 +59,7 @@ const PatientForm = ({ ...formProps }: Props) => {
             </div>
             <AddressField name="adress" />
           </div>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <div className="mt-auto border-t border-slate-200 px-4 pt-5 pb-4">
             <PrimaryButton type="submit" className="">
               Salvar

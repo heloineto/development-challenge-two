@@ -36,9 +36,7 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
 
     const canvasScaled = editorRef.current.getImageScaledToCanvas();
 
-    const url = canvasScaled.toDataURL('image/jpeg', 0.75);
-    const base64 = url.split(',')[1];
-    const picture = base64;
+    const picture = canvasScaled.toDataURL('image/jpeg', 0.75);
 
     return picture;
   };
