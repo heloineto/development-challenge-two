@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'clsx';
-import PatientForm from './PatientProfile.Form';
-import PatientProfileButtons from './PatientProfile.Buttons';
+import PatientProfileForm from './PatientProfile.Form';
 
 type Props = ComponentProps<'div'>;
 
@@ -9,15 +8,12 @@ const PatientProfile = ({ className, ...divProps }: Props) => {
   return (
     <div
       className={classNames(
-        ' flex h-full w-full flex-col overflow-y-hidden rounded-lg bg-white shadow',
+        'flex h-full w-full flex-col overflow-y-hidden rounded-lg bg-white shadow',
         className,
       )}
       {...divProps}
     >
-      <div className="relative h-full">
-        <PatientProfileButtons className="absolute top-7 right-4" />
-        <PatientForm />
-      </div>
+      <PatientProfileForm />
     </div>
   );
 };

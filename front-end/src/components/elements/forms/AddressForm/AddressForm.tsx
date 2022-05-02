@@ -9,13 +9,12 @@ import { addressDecorator } from './lib/decorators';
 import { parseAddress, parseZipCode } from './lib/parsers';
 import Dialog from '../../other/Dialog';
 
-interface Props {
-  textFieldProps?: MuiTextFieldProps;
+interface Props extends Omit<MuiTextFieldProps, 'value' | 'onChange'> {
   value: Address | undefined;
   onChange: (address: Address) => void;
 }
 
-const AddressForm = ({ value, onChange, textFieldProps }: Props) => {
+const AddressForm = ({ value, onChange, disabled, ...muiTextFieldProps }: Props) => {
   const [open, setOpen] = useState(false);
   const initialValues = value;
   const addressStr = useMemo(() => parseAddress(value), [value]);
@@ -27,8 +26,11 @@ const AddressForm = ({ value, onChange, textFieldProps }: Props) => {
         multiline
         maxRows={2}
         value={addressStr}
-        onClick={() => setOpen(true)}
-        {...textFieldProps}
+        onClick={() => {
+          if (!disabled) setOpen(true);
+        }}
+        disabled={disabled}
+        {...muiTextFieldProps}
       />
       <Dialog open={open} onClose={() => setOpen(false)}>
         <Form

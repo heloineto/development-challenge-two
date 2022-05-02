@@ -3,11 +3,17 @@ import { Button, ButtonProps } from '@mui/material';
 import classNames from 'clsx';
 import { MagnifyingGlass } from 'phosphor-react';
 import Dialog from '../../elements/other/Dialog';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 type Props = ButtonProps;
 
 const PatientSearch = ({ className }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  useHotkeys('ctrl+k', (e) => {
+    e.preventDefault();
+    setDialogOpen(true);
+  });
 
   return (
     <>
@@ -19,7 +25,7 @@ const PatientSearch = ({ className }: Props) => {
         variant="outlined"
         onClick={() => setDialogOpen(true)}
       >
-        <div className="flex items-center gap-x-2.5 text-xs sm:text-sm md:text-base">
+        <div className="flex items-center gap-x-2.5 text-sm md:text-base">
           <MagnifyingGlass className="h-5 w-5" weight="bold" />
           Pesquisar pacientes
         </div>

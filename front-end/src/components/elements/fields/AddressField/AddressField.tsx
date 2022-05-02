@@ -6,8 +6,9 @@ type Props = ComponentProps<typeof Field>;
 
 const AddressFieldAdapter = ({
   input: { onChange, value },
+  ...rest
 }: FieldRenderProps<unknown, HTMLElement, Address | undefined>) => {
-  return <AddressForm value={value} onChange={onChange} />;
+  return <AddressForm value={value} onChange={onChange} {...rest} />;
 };
 
 const AddressField = ({ ...rffFieldProps }: Props) => {

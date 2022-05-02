@@ -1,5 +1,5 @@
 import { NotePencil, Trash } from 'phosphor-react';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import IconButton from '../../elements/buttons/IconButton';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
@@ -7,16 +7,22 @@ import SecondaryButton from '../../elements/buttons/SecondaryButton';
 import Dialog from '../../elements/other/Dialog';
 import classNames from 'clsx';
 
-type Props = ComponentProps<'div'>;
+interface Props extends ComponentProps<'div'> {
+  toggleEdit: () => void;
+  deletePatient: () => void;
+  edit: boolean;
+}
 
-const PatientProfileButtons = ({ className, ...divProps }: Props) => {
+const PatientProfileButtons = ({
+  toggleEdit,
+  deletePatient,
+  edit,
+  className,
+  ...divProps
+}: Props) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const onEdit = useCallback(() => null, []);
-
-  const onDelete = useCallback(() => {
-    setDeleteDialogOpen(true);
-  }, [setDeleteDialogOpen]);
+  const onDelete = () => setDeleteDialogOpen(true);
 
   useHotkeys('delete', onDelete);
 
@@ -26,8 +32,8 @@ const PatientProfileButtons = ({ className, ...divProps }: Props) => {
         <IconButton toolTip="Deletar" colorName="red" onClick={onDelete}>
           <Trash className="h-5 w-auto" weight="bold" />
         </IconButton>
-        <IconButton toolTip="Editar">
-          <NotePencil className="h-5 w-auto" weight="bold" onClick={onEdit} />
+        <IconButton toolTip={edit ? 'Deixar de editar' : 'Editar'}>
+          <NotePencil className="h-5 w-auto" weight="bold" onClick={toggleEdit} />
         </IconButton>
       </div>
       <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
@@ -39,7 +45,15 @@ const PatientProfileButtons = ({ className, ...divProps }: Props) => {
             </p>
           </div>
           <div className="flex w-full gap-x-6">
-            <PrimaryButton colorName="red">Deletar</PrimaryButton>
+            <PrimaryButton
+              colorName="red"
+              onClick={() => {
+                deletePatient();
+                setDeleteDialogOpen(false);
+              }}
+            >
+              Deletar
+            </PrimaryButton>
             <SecondaryButton onClick={() => setDeleteDialogOpen(false)}>Cancelar</SecondaryButton>
           </div>
         </div>

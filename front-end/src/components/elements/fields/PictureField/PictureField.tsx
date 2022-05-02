@@ -6,8 +6,9 @@ type Props = ComponentProps<typeof Field>;
 
 const PictureFieldAdapter = ({
   input: { onChange, value },
+  ...rest
 }: FieldRenderProps<unknown, HTMLElement, string | null>) => {
-  return <Picture value={value} onChange={onChange} />;
+  return <Picture value={value} onChange={onChange} {...rest} />;
 };
 
 const PictureField = ({ ...rffFieldProps }: Props) => {

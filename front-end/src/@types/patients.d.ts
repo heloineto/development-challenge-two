@@ -4,7 +4,7 @@ interface Patient {
   birthdate?: string;
   email?: string;
   address?: Address;
-  pictureUrl?: string;
+  picture?: string;
 }
 
 interface Address {

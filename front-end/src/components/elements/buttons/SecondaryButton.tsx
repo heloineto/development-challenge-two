@@ -29,7 +29,7 @@ const SecondaryButton = ({ className, colorName = 'slate', ...muiButtonProps }: 
     <StyledButton
       className={classNames(
         className,
-        'py-2 text-base font-semibold transition-colors duration-500',
+        'py-2 !text-base font-semibold transition-colors duration-500 sm:!text-lg',
       )}
       variant="outlined"
       {...muiButtonProps}

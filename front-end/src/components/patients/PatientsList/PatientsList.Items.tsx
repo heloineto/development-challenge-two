@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 import { Pagination, PaginationItem, Skeleton } from '@mui/material';
 import { CaretLeft, CaretRight } from 'phosphor-react';
-import usePatients from '../../../lib/hook/usePatients';
 import PatientsListItem from './PatientsList.Item';
-import PatientContext from '../../../lib/contexts/PatientContext';
+import PatientsContext from '../../../lib/contexts/PatientsContext';
 
 type Props = ComponentProps<'ul'>;
 
 const PatientsListItems = ({ ...ulProps }: Props) => {
-  const { patient, setPatient } = useContext(PatientContext);
-  const { patients, loading } = usePatients();
+  const { patients, loading, selectedPatient, setSelectedPatient } = useContext(PatientsContext);
 
   if (loading) {
     return (
@@ -27,8 +25,13 @@ const PatientsListItems = ({ ...ulProps }: Props) => {
   return (
     <>
       <ul className="my-2.5 flex flex-grow flex-col gap-y-2" {...ulProps}>
-        {patients?.map((patient) => (
-          <PatientsListItem key={patient.id} patient={patient} />
+        {patients?.map((_patient) => (
+          <PatientsListItem
+            key={_patient.id}
+            patient={_patient}
+            selected={_patient.id === selectedPatient?.id}
+            onClick={() => setSelectedPatient?.(_patient)}
+          />
         ))}
       </ul>
       <div className="mr-auto md:w-full">

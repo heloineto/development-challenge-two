@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotePencil, PlusCircle, XCircle } from 'phosphor-react';
 import { Button } from '@mui/material';
 
 interface Props {
   picture: string | null;
   openDialog: () => void;
+  disabled?: boolean;
 }
 
-const PictureView = ({ picture, openDialog }: Props) => {
+const PictureView = ({ picture, openDialog, disabled }: Props) => {
   const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [picture]);
 
   if (imageError) {
     return (
@@ -30,8 +35,17 @@ const PictureView = ({ picture, openDialog }: Props) => {
         color="inherit"
       >
         <div className="flex flex-col justify-center">
-          <PlusCircle className="h-9 w-auto text-slate-600" weight="bold" />
-          <div className="text-base text-slate-700">Adicionar Foto</div>
+          {!disabled ? (
+            <>
+              <PlusCircle className="h-9 w-auto text-slate-600" weight="bold" />
+              <div className="text-base text-slate-700">Adicionar Foto</div>
+            </>
+          ) : (
+            <>
+              <XCircle className="h-9 w-auto text-slate-600" weight="bold" />
+              <div className="text-base text-slate-700">Sem Foto</div>
+            </>
+          )}
         </div>
       </Button>
     );
@@ -48,9 +62,11 @@ const PictureView = ({ picture, openDialog }: Props) => {
         alt="Profile picture"
         onError={() => setImageError(true)}
       />
-      <div className="absolute top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-25 opacity-0 hover:opacity-100">
-        <NotePencil className="h-9 w-auto text-slate-400" weight="bold" />
-      </div>
+      {!disabled && (
+        <div className="absolute top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-25 opacity-0 hover:opacity-100">
+          <NotePencil className="h-9 w-auto text-slate-400" weight="bold" />
+        </div>
+      )}
     </div>
   );
 };

@@ -125,6 +125,38 @@ const theme: ThemeOptions = {
         },
         size: 'small',
       },
+      styleOverrides: {
+        root: {
+          label: {
+            '&.Mui-disabled': {
+              color: twColors.slate[800],
+            },
+          },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-disabled': {
+            '&::before': {
+              display: 'none',
+            },
+          },
+          input: {
+            '&.Mui-disabled': {
+              color: twColors.slate[900],
+              WebkitTextFillColor: twColors.slate[900],
+            },
+          },
+          textarea: {
+            '&.Mui-disabled': {
+              color: twColors.slate[900],
+              WebkitTextFillColor: twColors.slate[900],
+            },
+          },
+        },
+      },
     },
     MuiCheckbox: {
       defaultProps: {

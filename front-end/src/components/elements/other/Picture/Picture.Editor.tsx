@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import { IconButton as MuiIconButton, Slider } from '@mui/material';
+import { Slider } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import {
   ArrowClockwise,
@@ -10,6 +10,7 @@ import {
 } from 'phosphor-react';
 import SecondaryButton from '../../buttons/SecondaryButton';
 import PrimaryButton from '../../buttons/PrimaryButton';
+import IconButton from '../../buttons/IconButton';
 
 interface PictureEditorProps {
   image: File | string;
@@ -18,7 +19,7 @@ interface PictureEditorProps {
 }
 
 const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
-  const [size, setSize] = useState({ width: 200, height: 200 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 });
   const [rotate, setRotate] = useState(0);
@@ -42,6 +43,9 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
   };
 
   useEffect(() => {
+    const divElem = divRef.current;
+    if (!divElem) return;
+
     const handleZoom = (e: WheelEvent) => {
       e.preventDefault();
 
@@ -50,32 +54,41 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
       });
     };
 
-    if (!divRef?.current) return;
-
-    const divElem = divRef.current;
-    const { width, height } = divElem.getBoundingClientRect();
-
-    setSize({
-      width: Math.max(width - border * 2, 0),
-      height: Math.max(height - border * 2, 0),
-    });
-
     divElem.addEventListener('wheel', handleZoom);
 
     return () => divElem.removeEventListener('wheel', handleZoom);
-  }, [maxScale, divRef]);
+  }, [maxScale]);
+
+  useEffect(() => {
+    const divElem = divRef.current;
+    if (!divElem) return;
+
+    const handleResize = () => {
+      const { width, height } = divElem.getBoundingClientRect();
+
+      setSize({
+        width: Math.max(width - border * 2, 0),
+        height: Math.max(height - border * 2, 0),
+      });
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   return (
     <div className="relative flex h-full w-full flex-col">
       <div className="grid h-full w-full overflow-hidden bg-slate-100">
         <div
-          className="m-auto flex max-h-full w-full flex-col overflow-hidden"
-          style={{ aspectRatio: '1 / 1' }}
+          className="m-auto flex aspect-square max-h-full w-full flex-col overflow-hidden"
           ref={divRef}
         >
           <AvatarEditor
-            className="h-full w-full"
-            style={{ aspectRatio: '1' }}
             width={size.width}
             height={size.height}
             ref={editorRef}
@@ -93,23 +106,13 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center justify-between px-4 pt-2 lg:flex-row">
-        <div className="hidden xl:block xl:w-80"></div>
-        <div className="flex justify-center gap-x-4">
+      <div className="flex w-full flex-col items-center justify-between gap-x-4 gap-y-2 pt-2 lg:flex-row">
+        <div className="flex w-full justify-between sm:w-2/3">
           <div className="flex">
-            <MuiIconButton
-              className="!text-slate-800 hover:!text-blue-600"
-              onClick={() =>
-                setRotate((value) => {
-                  const newValue = value + 90;
-                  return newValue >= 360 ? 0 : newValue;
-                })
-              }
-            >
-              <ArrowCounterClockwise className="h-5 w-5" />
-            </MuiIconButton>
-            <MuiIconButton
-              className="!text-slate-800 hover:!text-blue-600"
+            <IconButton
+              className="!rounded-r-none"
+              toolTip="Girar no sentido anti-horário"
+              colorName="violet"
               onClick={() =>
                 setRotate((value) => {
                   const newValue = value - 90;
@@ -117,16 +120,30 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
                 })
               }
             >
+              <ArrowCounterClockwise className="h-5 w-5" />
+            </IconButton>
+            <IconButton
+              className="!-ml-1 !rounded-l-none"
+              toolTip="Girar no sentido horário"
+              colorName="violet"
+              onClick={() =>
+                setRotate((value) => {
+                  const newValue = value + 90;
+                  return newValue >= 360 ? 0 : newValue;
+                })
+              }
+            >
               <ArrowClockwise className="h-5 w-5" />
-            </MuiIconButton>
+            </IconButton>
           </div>
-          <div className="flex items-center gap-x-2">
-            <MuiIconButton
-              className="!text-slate-800 hover:!text-blue-600"
+          <div className="flex items-center gap-x-4">
+            <IconButton
+              toolTip="Menos zoom"
+              colorName="blue"
               onClick={() => setScale((value) => Math.max(value - 0.5, 1))}
             >
               <MagnifyingGlassMinus className="h-5 w-5" />
-            </MuiIconButton>
+            </IconButton>
             <Slider
               className="!w-40"
               aria-label="zoom"
@@ -136,15 +153,16 @@ const PictureEditor = ({ image, onClose, onSave }: PictureEditorProps) => {
               onChange={(event, newValue) => typeof newValue === 'number' && setScale(newValue)}
               step={0.1}
             />
-            <MuiIconButton
-              className="!text-slate-800 hover:!text-blue-600"
+            <IconButton
+              toolTip="Mais zoom"
+              colorName="blue"
               onClick={() => setScale((value) => Math.min(value + 0.5, maxScale))}
             >
               <MagnifyingGlassPlus className="h-5 w-5" />
-            </MuiIconButton>
+            </IconButton>
           </div>
         </div>
-        <div className="flex w-full gap-x-2.5 sm:w-96 md:w-80">
+        <div className="flex w-full gap-x-2.5 sm:w-1/3">
           <SecondaryButton className="!h-10 lg:!w-3/5" size="small" onClick={onClose}>
             Cancelar
           </SecondaryButton>

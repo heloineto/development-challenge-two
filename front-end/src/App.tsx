@@ -4,11 +4,11 @@ import Grid from './components/layout/Grid';
 import Logo from './components/logo/Logo';
 import PatientsList from './components/patients/PatientsList';
 import PatientProfile from './components/patients/PatientProfile';
-import PatientContext from './lib/contexts/PatientContext';
-import usePatient from './lib/hook/usePatient';
+import PatientsContext from './lib/contexts/PatientsContext';
+import usePatients from './lib/hook/usePatients';
 
 const App = () => {
-  const patientCtx = usePatient();
+  const patientsCtx = usePatients();
 
   return (
     <Container className="flex flex-col py-5 xl:h-screen">
@@ -16,10 +16,10 @@ const App = () => {
         <Logo />
       </div>
       <Grid className="flex-grow">
-        <PatientContext.Provider value={patientCtx}>
+        <PatientsContext.Provider value={patientsCtx}>
           <PatientsList className="col-span-12 xl:col-span-4" />
           <PatientProfile className="col-span-12 xl:col-span-8" />
-        </PatientContext.Provider>
+        </PatientsContext.Provider>
       </Grid>
     </Container>
   );

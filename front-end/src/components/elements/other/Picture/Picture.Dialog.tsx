@@ -25,7 +25,7 @@ const PictureDialog = ({ open, onClose, value, onChange }: Props) => {
 
   useEffect(() => {
     setImage(value);
-  }, [value]);
+  }, [value, open]);
 
   return (
     <>
@@ -123,7 +123,7 @@ const PictureDialog = ({ open, onClose, value, onChange }: Props) => {
             onClose={() => setEditorOpen(false)}
             image={image}
             onSave={(picture) => {
-              onChange?.(picture);
+              onChange(picture);
               onClose();
               setEditorOpen(false);
               setImage(null);

@@ -4,6 +4,7 @@ const patientSchema = yup.object().shape({
   fullName: yup.string().required('Forneça o nome completo'),
   birthdate: yup.string(),
   email: yup.string().email('Forneça um e-mail válido'),
+  picture: yup.string(),
   address: yup
     .object({
       zipCode: yup.string().required('Forneca um CEP'),

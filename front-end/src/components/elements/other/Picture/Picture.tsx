@@ -5,16 +5,17 @@ import PictureView from './Picture.View';
 interface Props {
   value: string | null;
   onChange: (value: string | null) => void;
+  disabled?: boolean;
 }
 
-const Picture = ({ value, onChange }: Props) => {
+const Picture = ({ value, onChange, disabled }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const openDialog = useCallback(() => setDialogOpen(true), []);
+  const openDialog = useCallback(() => (!disabled ? setDialogOpen(true) : undefined), [disabled]);
 
   return (
     <>
-      <PictureView picture={value} openDialog={openDialog} />
+      <PictureView picture={value} openDialog={openDialog} disabled={disabled} />
 
       <PictureDialog
         open={dialogOpen}
