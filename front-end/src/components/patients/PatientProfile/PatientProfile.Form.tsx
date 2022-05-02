@@ -13,6 +13,7 @@ import { useSnackbar } from 'notistack';
 import PatientProfileCache from './PatientProfile.Cache';
 import useLocalStorage from '../../../lib/hook/useLocalStorage';
 import IconButton from '../../elements/buttons/IconButton';
+import { AxiosResponse } from 'axios';
 
 type PatientFormValues = {
   fullName: string;
@@ -25,43 +26,69 @@ type PatientFormValues = {
 type Props = ComponentProps<'form'>;
 
 const PatientProfileForm = ({ ...formProps }: Props) => {
-  const { selectedPatient, getPatients } = useContext(PatientsContext);
+  const { selectedPatient, setSelectedPatient, getPatients } = useContext(PatientsContext);
   const [edit, setEdit] = useState(!selectedPatient);
   const [initialValues, setInitialValues] = useState<any>({});
   const [cache, setCache] = useLocalStorage('form-cache', {});
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => setEdit(!selectedPatient), [selectedPatient]);
+  useEffect(() => {
+    setEdit(!selectedPatient);
+  }, [selectedPatient]);
 
   useEffect(() => {
-    if (selectedPatient) {
-      setInitialValues(selectedPatient);
-      return;
-    }
-
-    if (cache) {
-      setInitialValues(cache);
-      return;
-    }
+    if (selectedPatient) setInitialValues(selectedPatient);
+    else if (cache) setInitialValues(cache);
   }, [selectedPatient, cache]);
+
+  const onError = (message: string, error: any) => {
+    enqueueSnackbar(message, { variant: 'error' });
+    if (process.env.NODE_ENV === 'development') console.error(error);
+  };
 
   const onSubmit = async (values: PatientFormValues) => {
     const newPatient = { id: selectedPatient?.id, ...values };
-    const response = await api.post('patients', JSON.stringify(newPatient));
 
-    if (response.status === 200) {
-      enqueueSnackbar('Paciente salvo!', { variant: 'success' });
+    let response: AxiosResponse<any, any> | undefined;
+
+    try {
+      response = await api.post('patients', JSON.stringify(newPatient));
+    } catch (error) {
+      onError('Erro ao salvar paciente', error);
+      return;
     }
 
-    setCache({});
-    getPatients?.();
+    if (response?.status === 200) {
+      enqueueSnackbar('Paciente salvo', { variant: 'success' });
+
+      setCache({});
+      getPatients?.();
+      return;
+    }
+
+    onError('Erro ao salvar paciente', response);
   };
 
   const onDelete = async () => {
     if (!selectedPatient) return;
-    const response = await api.delete(`patients/${selectedPatient.id}`);
 
-    getPatients?.();
+    let response: AxiosResponse<any, any> | undefined;
+
+    try {
+      response = await api.delete(`patients/${selectedPatient.id}`);
+    } catch (error) {
+      onError('Erro ao deletar paciente', error);
+      return;
+    }
+
+    if (response?.status === 200) {
+      enqueueSnackbar('Paciente deletado', { variant: 'success' });
+      getPatients?.();
+      setSelectedPatient?.(null);
+      return;
+    }
+
+    onError('Erro ao deletar paciente', response);
   };
 
   return (
@@ -121,7 +148,7 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
               </div>
               <AddressField name="address" disabled={!edit} />
             </div>
-            <pre className="">{JSON.stringify(values, null, 2)}</pre>
+            <pre className="hidden">{JSON.stringify(values, null, 2)}</pre>
             <div className="mt-auto border-t border-slate-200 px-4 pt-5 pb-4">
               <PrimaryButton type="submit">Salvar</PrimaryButton>
             </div>

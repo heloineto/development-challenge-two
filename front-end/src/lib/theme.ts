@@ -147,6 +147,10 @@ const theme: ThemeOptions = {
             '&.Mui-disabled': {
               color: twColors.slate[900],
               WebkitTextFillColor: twColors.slate[900],
+              '&::placeholder': {
+                color: 'transparent',
+                WebkitTextFillColor: 'transparent',
+              },
             },
           },
           textarea: {

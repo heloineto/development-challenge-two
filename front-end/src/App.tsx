@@ -15,10 +15,10 @@ const App = () => {
       <div className="mb-5 grid place-items-center">
         <Logo />
       </div>
-      <Grid className="flex-grow">
+      <Grid className="flex-grow  overflow-hidden">
         <PatientsContext.Provider value={patientsCtx}>
-          <PatientsList className="col-span-12 xl:col-span-4" />
-          <PatientProfile className="col-span-12 xl:col-span-8" />
+          <PatientsList className="col-span-12 lg:col-span-4" />
+          <PatientProfile className="col-span-12 lg:col-span-8" />
         </PatientsContext.Provider>
       </Grid>
     </Container>

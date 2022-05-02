@@ -38,6 +38,7 @@ exports.deletePatientHandler = async (event) => {
 
     const response = {
       statusCode: 200,
+      body: JSON.stringify({ message: 'Deleted Successfully' }),
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',

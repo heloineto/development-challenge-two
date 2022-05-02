@@ -64,8 +64,13 @@ exports.postPatientHandler = async (event) => {
     const id = body.id ?? generateId();
 
     let pictureURL;
+
     if (picture) {
-      pictureURL = await uploadImage(picture, id);
+      if (picture.startsWith('https')) {
+        pictureURL = picture;
+      } else {
+        pictureURL = await uploadImage(picture, id);
+      }
     }
 
     const Item = { id, fullName, birthdate, email, address, picture: pictureURL };

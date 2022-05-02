@@ -1,25 +1,24 @@
-// import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useState } from 'react';
 import api from '../api';
-// import api from '../api';
 import patientSchema from '../schemas/patientSchema';
-import useOnError from './useOnError';
 
 const usePatients = () => {
   const [patients, setPatients] = useState<Patient[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
-  const onError = useOnError();
+  const { enqueueSnackbar } = useSnackbar();
 
   const getPatients = useCallback(async () => {
-    const response = await api.get('patients');
+    const response = await api.get(`/patients`);
 
     const { data } = response;
 
     if (!Array.isArray(data)) {
-      onError(
+      enqueueSnackbar(
         `Não foi possível carregar pacientes. API retornou ${typeof data} ao invés de um Array`,
+        { variant: 'error' },
       );
       return;
     }
@@ -32,7 +31,9 @@ const usePatients = () => {
 
         _patients.push(each);
       } catch (error) {
-        onError(`Erro de validação: Paciente formatado incorretamente`);
+        enqueueSnackbar(`Erro de validação: Paciente formatado incorretamente`, {
+          variant: 'error',
+        });
       }
     }
 
