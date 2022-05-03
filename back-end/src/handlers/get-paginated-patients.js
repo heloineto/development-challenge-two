@@ -16,7 +16,7 @@ exports.getPaginatedPatientsHandler = async (event) => {
     const { id, limit } = event.pathParameters;
 
     if (!limit) {
-      throw new Error(`Parameter limit was not provided.`);
+      throw new Error(`Parameter "limit" was not provided.`);
     }
 
     let params = {
