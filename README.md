@@ -21,21 +21,21 @@ Medcloud's challenge for Dev Full Stack.
 
 ## Required
 
-- You need to develop both the front-end and the back-end.
-- In the front-end you MUST use React.
-- In the back-end you MUST use Node.js and AWS free-tier.
-- The patient data should not be static or local.
-- Field validation (date, required fields, etc)
-- AWS RDS MySQL, PostgreSQL or DynamoDB as database.
-- AWS Lambda for serveless computing.
-- AWS API Gateway for managing your REST API.
+- [x] You need to develop both the front-end and the back-end.
+- [x] In the front-end you MUST use React.
+- [x] In the back-end you MUST use Node.js and AWS free-tier.
+- [x] The patient data should not be static or local.
+- [x] Field validation (date, required fields, etc)
+- [x] AWS RDS MySQL, PostgreSQL or DynamoDB as database.
+- [x] AWS Lambda for serveless computing.
+- [x] AWS API Gateway for managing your REST API.
 
 ## Extra Points
 
-- Cache the data in-browser.
-- Pagination.
-- Use Material UI - https://material-ui.com.
-- A cool design.
+- [x] Cache the data in-browser.
+- [] Pagination.
+- [x] Use Material UI - https://material-ui.com.
+- [x] A cool design.
 
 ## References
 
