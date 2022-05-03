@@ -12,6 +12,10 @@ import SnackbarProvider from './components/elements/other/SnackbarProvider';
 
 const container = document.getElementById('root');
 
+/**
+ * This is the new New root API
+ * see: https://github.com/reactwg/react-18/discussions/5
+ */
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(container!);
 
