@@ -1,6 +1,10 @@
 import { createContext } from 'react';
-import usePatients from '../hook/usePatients';
 
-const PatientsContext = createContext<Partial<ReturnType<typeof usePatients>>>({});
+const CurrentPatientContext = createContext<
+  Partial<{
+    currPatient: Patient | null;
+    setCurrPatient: SetState<Patient | null>;
+  }>
+>({});
 
-export default PatientsContext;
+export default CurrentPatientContext;

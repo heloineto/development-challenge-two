@@ -9,7 +9,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ptBR } from 'date-fns/esm/locale';
 import 'tailwindcss/tailwind.css';
 import SnackbarProvider from './components/elements/other/SnackbarProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+const queryClient = new QueryClient();
 const container = document.getElementById('root');
 
 /**
@@ -23,9 +25,11 @@ root.render(
   <ThemeProvider theme={theme}>
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBR}>
       <SnackbarProvider>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <App />
+        <QueryClientProvider client={queryClient}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <App />
+        </QueryClientProvider>
       </SnackbarProvider>
     </LocalizationProvider>
   </ThemeProvider>,

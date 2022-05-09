@@ -33,3 +33,9 @@ type TailwindColorName =
   | 'fuchsia'
   | 'pink'
   | 'rose';
+
+type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+interface IError {
+  message?: string;
+}

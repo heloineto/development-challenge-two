@@ -1,36 +1,52 @@
 import React, { useContext } from 'react';
 import { Skeleton } from '@mui/material';
 import PatientsListItem from './PatientsList.Item';
-import PatientsContext from '../../../lib/contexts/PatientsContext';
+import CurrentPatientContext from '../../../lib/contexts/PatientsContext';
+import { getPatients } from '../../../lib/api';
+import { useQuery } from 'react-query';
+import { XCircle } from 'phosphor-react';
 
-type Props = ComponentProps<'ul'>;
+const PatientsListItems = () => {
+  const { currPatient, setCurrPatient } = useContext(CurrentPatientContext);
 
-const PatientsListItems = ({ ...ulProps }: Props) => {
-  const { patients, loading, selectedPatient, setSelectedPatient } = useContext(PatientsContext);
+  const { isLoading, isError, error, data: patients } = useQuery('patients', getPatients);
+
+  if (isLoading) {
+    return (
+      <>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Skeleton variant="rectangular" className="!h-20 rounded-md" key={index} />
+        ))}
+      </>
+    );
+  }
+
+  if (isError) {
+    const errorMsg = (error as IError)?.message;
+
+    return (
+      <>
+        <XCircle size={32} />
+        <div>Erro ao carregar pacientes</div>
+        {errorMsg && <span>Error: {errorMsg}</span>}
+      </>
+    );
+  }
 
   return (
     <>
-      <ul
-        className="-mx-4 mt-1.5 flex flex-grow flex-col gap-y-2 overflow-y-scroll pt-1 pb-2.5 pl-4 pr-1"
-        {...ulProps}
-      >
-        {!loading
-          ? patients?.map((patient) => {
-              const selected = patient.id === selectedPatient?.id;
+      {patients?.map((patient: Patient) => {
+        const selected = patient.id === currPatient?.id;
 
-              return (
-                <PatientsListItem
-                  key={patient.id}
-                  patient={patient}
-                  selected={selected}
-                  onClick={() => setSelectedPatient?.(patient)}
-                />
-              );
-            })
-          : Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton variant="rectangular" className="!h-20 rounded-md" key={index} />
-            ))}
-      </ul>
+        return (
+          <PatientsListItem
+            key={patient.id}
+            patient={patient}
+            selected={selected}
+            onClick={() => setCurrPatient?.(patient)}
+          />
+        );
+      })}
     </>
   );
 };

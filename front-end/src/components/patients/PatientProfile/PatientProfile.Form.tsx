@@ -1,9 +1,10 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
 import { Calendar, PaintBrushHousehold } from 'phosphor-react';
-import api from '../../../lib/api';
+import api, { deletePatient, getPatients, postPatient } from '../../../lib/api';
 import PatientProfileButtons from './PatientProfile.Buttons';
-import PatientsContext from '../../../lib/contexts/PatientsContext';
+import CurrentPatientContext from '../../../lib/contexts/PatientsContext';
 import { useSnackbar } from 'notistack';
 import PatientProfileCache from './PatientProfile.Cache';
 import useLocalStorage from '../../../lib/hook/useLocalStorage';
@@ -14,10 +15,13 @@ import { TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import AddressForm from '../../elements/forms/AddressForm';
 import Picture from '../../elements/other/Picture';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { isEmpty } from 'lodash';
+import useStatusSnackbars from '../../../lib/hook/useStatusSnackbars';
 
 type FormValues = {
   fullName: string;
-  birthdate?: Date;
+  birthdate?: string;
   email?: string;
   address?: Address;
   picture?: string;
@@ -25,76 +29,67 @@ type FormValues = {
 
 type Props = ComponentProps<'form'>;
 
+const toDate = (dateSrt: string) => {
+  const [years, months, days] = dateSrt.split('-').map((str) => Number(str));
+
+  return new Date(years, months - 1, days);
+};
+
+const fromDate = (date: Date) => date?.toISOString().split('T')[0];
+
 const PatientProfileForm = ({ ...formProps }: Props) => {
-  const { selectedPatient, setSelectedPatient, getPatients } = useContext(PatientsContext);
-  const [edit, setEdit] = useState(!selectedPatient);
-  const [initialValues, setInitialValues] = useState<any>({});
+  const { currPatient } = useContext(CurrentPatientContext);
+  const [edit, setEdit] = useState(!currPatient);
+  const [initialValues, setInitialValues] = useState<Partial<Patient>>({});
   const [cache, setCache] = useLocalStorage('form-cache', {});
-  const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit } = useForm<FormValues>();
 
-  useEffect(() => setEdit(!selectedPatient), [selectedPatient]);
+  const queryClient = useQueryClient();
+  const { mutateAsync: postAsync, status: postStatus } = useMutation(postPatient, {
+    onSuccess: () => queryClient.invalidateQueries('patients'),
+  });
+  const { mutateAsync: deleteAsync, status: deleteStatus } = useMutation(deletePatient, {
+    onSuccess: () => queryClient.invalidateQueries('patients'),
+  });
+  useStatusSnackbars(postStatus, 'POST');
+  useStatusSnackbars(deleteStatus, 'DELETE');
+
+  useEffect(() => setEdit(!currPatient), [currPatient]);
 
   useEffect(() => {
-    if (selectedPatient) setInitialValues(selectedPatient);
+    if (currPatient) setInitialValues(currPatient);
     else if (cache) setInitialValues(cache);
-  }, [selectedPatient, cache]);
-
-  const onError = (message: string, error: any) => {
-    enqueueSnackbar(message, { variant: 'error' });
-    if (process.env.NODE_ENV === 'development') console.error(error);
-  };
+  }, [currPatient, cache]);
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    const newPatient = { id: selectedPatient?.id, ...values };
+    const { birthdate, fullName, picture, email, address } = values;
 
-    let response: AxiosResponse<any, any> | undefined;
+    const newPatient = {
+      id: currPatient?.id,
+      fullName: fullName,
+      birthdate: birthdate || undefined,
+      picture: picture || undefined,
+      email: email || undefined,
+      address: !isEmpty(address) ? address : undefined,
+    };
 
-    try {
-      response = await api.post('patients', JSON.stringify(newPatient));
-    } catch (error) {
-      onError('Erro ao salvar paciente', error);
-      return;
-    }
-
-    if (response?.status === 200) {
-      enqueueSnackbar('Paciente salvo', { variant: 'success' });
-
-      setCache({});
-      getPatients?.();
-      return;
-    }
-
-    onError('Erro ao salvar paciente', response);
+    void postAsync(newPatient);
   };
 
   const onDelete = async () => {
-    if (!selectedPatient) return;
+    if (!currPatient) return;
 
-    let response: AxiosResponse<any, any> | undefined;
-
-    try {
-      response = await api.delete(`patients/${selectedPatient.id}`);
-    } catch (error) {
-      onError('Erro ao deletar paciente', error);
-      return;
-    }
-
-    if (response?.status === 200) {
-      enqueueSnackbar('Paciente deletado', { variant: 'success' });
-      getPatients?.();
-      setSelectedPatient?.(null);
-      return;
-    }
-
-    onError('Erro ao deletar paciente', response);
+    void deleteAsync(currPatient.id);
   };
-
-  console.log(initialValues['fullName']);
 
   return (
     <div className="relative h-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex h-full flex-col" {...formProps}>
+      <form
+        id="patient-form"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex h-full flex-col"
+        {...formProps}
+      >
         <div className="flex items-center gap-x-4 px-4 py-7">
           <Controller
             name="fullName"
@@ -114,7 +109,7 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
             )}
           />
 
-          {selectedPatient ? (
+          {currPatient ? (
             <PatientProfileButtons
               edit={edit}
               toggleEdit={() => setEdit((value) => !value)}
@@ -139,7 +134,7 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
                 name="picture"
                 control={control}
                 defaultValue={initialValues['picture'] ?? ''}
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                render={({ field: { onChange, value } }) => (
                   <Picture value={value ?? null} onChange={onChange} disabled={!edit} />
                 )}
               />
@@ -148,11 +143,23 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
               <Controller
                 name="birthdate"
                 control={control}
-                defaultValue={initialValues['birthdate'] ?? ''}
+                rules={{
+                  validate: (value) => {
+                    if (!value) return true;
+
+                    const tomorrow = new Date();
+                    tomorrow.setUTCHours(0, 0, 0, 0);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+
+                    const date = toDate(value);
+                    if (date >= tomorrow) return false;
+                  },
+                }}
+                defaultValue={initialValues?.['birthdate']}
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <DatePicker
-                    value={value}
-                    onChange={onChange}
+                    value={value ? toDate(value) : value}
+                    onChange={(value) => onChange(value instanceof Date ? fromDate(value) : value)}
                     label="Data de nascimento"
                     inputFormat="dd/MM/yyyy"
                     components={{
@@ -163,15 +170,13 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
                     disabled={!edit}
                     renderInput={(params) => (
                       <TextField
-                        error={!!error}
                         helperText={error ? error.message : null}
-                        id="dateOfBirth"
                         variant="standard"
                         margin="dense"
                         fullWidth
                         color="primary"
-                        autoComplete="bday"
                         {...params}
+                        error={!!error}
                       />
                     )}
                   />
@@ -204,22 +209,17 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
           <Controller
             name="address"
             control={control}
-            defaultValue={initialValues['address'] ?? ''}
+            defaultValue={initialValues?.['address']}
             render={({ field: { onChange, value } }) => (
               <AddressForm value={value} onChange={onChange} name="address" disabled={!edit} />
             )}
           />
         </div>
-        {/* <pre className="hidden">{JSON.stringify(values, null, 2)}</pre> */}
         <div className="mt-auto border-t border-slate-200 px-4 pt-5 pb-4">
-          <PrimaryButton type="submit">Salvar</PrimaryButton>
+          <PrimaryButton form="patient-form" type="submit">
+            Salvar
+          </PrimaryButton>
         </div>
-        {/* {!selectedPatient && (
-          <FormSpy
-            subscription={{ values: true }}
-            component={({ values }) => <PatientProfileCache values={values} setCache={setCache} />}
-          />
-        )} */}
       </form>
     </div>
   );

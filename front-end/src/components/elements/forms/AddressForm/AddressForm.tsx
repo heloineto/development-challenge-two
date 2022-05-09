@@ -50,8 +50,6 @@ const AddressForm = ({ value, onChange, disabled, ...muiTextFieldProps }: Props)
     const zipCode = parseZipCode(e.target.value);
     if (!zipCode || zipCode.length !== 9) return zipCode;
 
-    console.log({ zipCode });
-
     try {
       cep(zipCode, {}).then(({ state, city, street, neighborhood }: CEP) => {
         setValue('state', state);
