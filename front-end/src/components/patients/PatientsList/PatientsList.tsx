@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import classNames from 'clsx';
-import { Button } from '@mui/material';
+import { Button, Pagination } from '@mui/material';
 import { UserCirclePlus } from 'phosphor-react';
 import PatientsListItems from './PatientsList.Items';
 import PatientsContext from '../../../lib/contexts/PatientsContext';
@@ -32,6 +32,7 @@ const PatientsList = ({ className, ...divProps }: Props) => {
           </span>
         </Button>
         <PatientsListItems />
+        <Pagination count={10} />
       </div>
     </div>
   );
