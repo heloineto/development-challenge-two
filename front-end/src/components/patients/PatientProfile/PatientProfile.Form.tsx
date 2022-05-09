@@ -1,21 +1,15 @@
-/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
-import { Calendar, PaintBrushHousehold } from 'phosphor-react';
-import api, { deletePatient, getPatients, postPatient } from '../../../lib/api';
+import { Calendar } from 'phosphor-react';
+import { deletePatient, postPatient } from '../../../lib/api';
 import PatientProfileButtons from './PatientProfile.Buttons';
 import CurrentPatientContext from '../../../lib/contexts/PatientsContext';
-import { useSnackbar } from 'notistack';
-import PatientProfileCache from './PatientProfile.Cache';
-import useLocalStorage from '../../../lib/hook/useLocalStorage';
-import IconButton from '../../elements/buttons/IconButton';
-import { AxiosResponse } from 'axios';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import AddressForm from '../../elements/forms/AddressForm';
 import Picture from '../../elements/other/Picture';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { isEmpty } from 'lodash';
 import useStatusSnackbars from '../../../lib/hook/useStatusSnackbars';
 
@@ -41,7 +35,6 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
   const { currPatient } = useContext(CurrentPatientContext);
   const [edit, setEdit] = useState(!currPatient);
   const [initialValues, setInitialValues] = useState<Partial<Patient>>({});
-  const [cache, setCache] = useLocalStorage('form-cache', {});
   const { control, handleSubmit } = useForm<FormValues>();
 
   const queryClient = useQueryClient();
@@ -54,12 +47,16 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
   useStatusSnackbars(postStatus, 'POST');
   useStatusSnackbars(deleteStatus, 'DELETE');
 
-  useEffect(() => setEdit(!currPatient), [currPatient]);
-
   useEffect(() => {
-    if (currPatient) setInitialValues(currPatient);
-    else if (cache) setInitialValues(cache);
-  }, [currPatient, cache]);
+    if (currPatient) {
+      setInitialValues(currPatient);
+      setEdit(false);
+      return;
+    }
+
+    setEdit(true);
+    setInitialValues({});
+  }, [currPatient]);
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     const { birthdate, fullName, picture, email, address } = values;
@@ -109,22 +106,12 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
             )}
           />
 
-          {currPatient ? (
+          {currPatient && (
             <PatientProfileButtons
               edit={edit}
               toggleEdit={() => setEdit((value) => !value)}
               deletePatient={onDelete}
             />
-          ) : (
-            <IconButton toolTip="Limpar formulário" colorName="orange">
-              <PaintBrushHousehold
-                className="h-5 w-auto"
-                weight="bold"
-                onClick={() => {
-                  setCache({});
-                }}
-              />
-            </IconButton>
           )}
         </div>
         <div className="flex flex-grow flex-col gap-10 border-t border-slate-200 px-4 pt-7 pb-4">
@@ -133,7 +120,7 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
               <Controller
                 name="picture"
                 control={control}
-                defaultValue={initialValues['picture'] ?? ''}
+                defaultValue={initialValues?.['picture']}
                 render={({ field: { onChange, value } }) => (
                   <Picture value={value ?? null} onChange={onChange} disabled={!edit} />
                 )}
@@ -191,7 +178,7 @@ const PatientProfileForm = ({ ...formProps }: Props) => {
                     message: 'Forneça um e-mail válido',
                   },
                 }}
-                defaultValue={initialValues['email'] ?? ''}
+                defaultValue={initialValues?.['email']}
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <TextField
                     value={value}
