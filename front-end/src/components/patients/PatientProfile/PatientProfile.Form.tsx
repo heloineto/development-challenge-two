@@ -1,10 +1,7 @@
-/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
-import patientSchema from '../../../lib/schemas/patientSchema';
 import PrimaryButton from '../../elements/buttons/PrimaryButton';
 import { Calendar, PaintBrushHousehold } from 'phosphor-react';
 import api from '../../../lib/api';
-import PictureField from '../../elements/fields/PictureField';
 import PatientProfileButtons from './PatientProfile.Buttons';
 import PatientsContext from '../../../lib/contexts/PatientsContext';
 import { useSnackbar } from 'notistack';
