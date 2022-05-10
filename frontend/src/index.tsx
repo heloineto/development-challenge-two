@@ -10,6 +10,7 @@ import { ptBR } from 'date-fns/esm/locale';
 import 'tailwindcss/tailwind.css';
 import SnackbarProvider from './components/elements/other/SnackbarProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 const container = document.getElementById('root');
@@ -26,6 +27,7 @@ root.render(
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBR}>
       <SnackbarProvider>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <App />
